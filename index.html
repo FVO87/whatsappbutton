@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WhatsApp Button</title>
+</head>
+<body>
+
+  <div id="whatsapp-button" class="rounded-lg shadow-md">
+    <img src="https://cdn.iconscout.com/icon/free/png-512/whatsapp-164615.png" alt="WhatsApp" class="w-20 h-20">
+  </div>
+
+  <div id="whatsapp-form" class="fixed bottom-0 left-0 w-full h-full z-10 flex justify-center items-center">
+    <div class="flex flex-col">
+      <div class="w-full bg-green-500 rounded-lg p-4">
+        <h2 class="text-white font-semibold">Contato</h2>
+      </div>
+
+      <input type="text" name="name" placeholder="Nome" class="w-full py-2 px-4 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+      <input type="text" name="phone" placeholder="Telefone" class="w-full py-2 px-4 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+      <button type="submit" class="py-2 px-4 bg-green-500 text-white rounded-lg font-semibold">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    // Envia os dados do formulário por e-mail
+    function sendFormData(event) {
+      event.preventDefault();
+
+      // Obtém os dados do formulário
+      const name = document.getElementById("whatsapp-form").querySelector("input[name='name']").value;
+      const phone = document.getElementById("whatsapp-form").querySelector("input[name='phone']").value;
+
+      // Cria o e-mail
+      const email = new Email({
+        to: "{{ email }}",
+        subject: "{{ subject }}",
+        body: "{{ body }}"
+      });
+
+      // Adiciona os dados do formulário ao e-mail
+      email.addBody(name, "Nome");
+      email.addBody(phone, "Telefone");
+
+      // Envia o e-mail
+      email.send();
+
+      // Redireciona o usuário para o WhatsApp
+      window.open("https://wa.me/{{ phone }}");
+    }
+
+    // Adiciona o evento de envio do formulário
+    document.getElementById("whatsapp-form").addEventListener("submit", sendFormData);
+  </script>
+</body>
+</html>
